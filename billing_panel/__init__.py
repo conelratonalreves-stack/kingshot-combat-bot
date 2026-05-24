@@ -1,1 +1,0 @@
-"""Billing panel package."""
