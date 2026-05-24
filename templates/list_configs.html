@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Configuración de Listas - Panel de Facturación</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1rem;
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            transition: background 0.3s;
+        }
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .alerts {
+            margin-bottom: 1.5rem;
+        }
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        .alert-info {
+            background: #e3f2fd;
+            color: #1565c0;
+            border-left: 4px solid #1976d2;
+        }
+        .alert-success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border-left: 4px solid #43a047;
+        }
+        .alert-error {
+            background: #ffebee;
+            color: #c62828;
+            border-left: 4px solid #e53935;
+        }
+        .alert-warning {
+            background: #fff3e0;
+            color: #e65100;
+            border-left: 4px solid #f57c00;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card h2 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 0.5rem;
+        }
+        .list-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .list-item {
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #f9f9f9;
+        }
+        .list-item:hover {
+            border-color: #667eea;
+            background: #f0f2ff;
+            box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
+        }
+        .list-item.selected {
+            border-color: #667eea;
+            background: #f0f2ff;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+        .list-item-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+        .list-item-id {
+            font-size: 0.85rem;
+            color: #999;
+            font-family: monospace;
+        }
+        .list-item-configured {
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            display: inline-block;
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        .form-section {
+            display: none;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #f0f0f0;
+        }
+        .form-section.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        .form-group small {
+            display: block;
+            margin-top: 0.35rem;
+            color: #666;
+            font-size: 0.85rem;
+        }
+        .form-group.row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .form-group.row .form-group {
+            margin-bottom: 0;
+        }
+        .button-group {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+        button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #5568d3;
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #1976d2;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #1565c0;
+        }
+        .info-box strong {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        .folder-structure {
+            margin: 1rem 0 1rem 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .folder-structure div {
+            margin-bottom: 0.25rem;
+        }
+        .space-name {
+            font-weight: 600;
+            color: #667eea;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .folder-name {
+            margin-left: 1rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← Volver al Panel</a>
+        
+        <header>
+            <h1>📋 Configuración de Listas</h1>
+            <p>Define el documento y hoja de Google Sheets para cada lista de tareas</p>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alerts">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% if warnings %}
+            <div class="alerts">
+                {% for warning in warnings %}
+                    <div class="alert alert-warning">
+                        ⚠️ {{ warning }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="card">
+            <h2>Selecciona una Lista</h2>
+            
+            <div class="info-box">
+                <strong>Instrucciones:</strong>
+                Haz clic en una lista para configurar su documento de Google Sheets. Solo necesitas especificar:
+                <br>• <strong>Link/ID</strong> del documento
+                <br>• Nombre de la <strong>hoja</strong>
+                <br>• Número de fila donde empieza el desglose (ej: 17)
+                <br>
+                <br>El sistema rellenará automáticamente:
+                <br>• Columna B: Cantidad
+                <br>• Columna C: Título de la tarea
+                <br>• Columna F: Precio unitario
+            </div>
+
+            <div class="list-grid">
+                {% for space in hierarchy.get('spaces', []) %}
+                    {% if space.folders or space.lists %}
+                        <div class="space-name">📁 {{ space.name }}</div>
+                    {% endif %}
+                    
+                    {% for folder in space.get('folders', []) %}
+                        <div class="folder-name">📂 {{ folder.name }}</div>
+                        {% for list in folder.get('lists', []) %}
+                            <div class="list-item" onclick="selectList('{{ list.id }}', '{{ list.name }}')">
+                                <div class="list-item-name">{{ list.name }}</div>
+                                <div class="list-item-id">{{ list.id }}</div>
+                                {% if list_configs.get(list.id|string) %}
+                                    <div class="list-item-configured">✓ Configurada</div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    
+                    {% for list in space.get('lists', []) %}
+                        <div class="list-item" onclick="selectList('{{ list.id }}', '{{ list.name }}')">
+                            <div class="list-item-name">{{ list.name }}</div>
+                            <div class="list-item-id">{{ list.id }}</div>
+                            {% if list_configs.get(list.id|string) %}
+                                <div class="list-item-configured">✓ Configurada</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="card form-section" id="formSection">
+            <h2>Configurar Google Sheets</h2>
+            <form method="POST" action="/list-configs/save">
+                <input type="hidden" id="listIdInput" name="list_id" value="">
+                
+                <div class="form-group">
+                    <label>📝 Nombre de la Lista</label>
+                    <input type="text" id="listNameDisplay" readonly style="background: #f5f5f5; cursor: not-allowed;">
+                </div>
+
+                <div class="form-group">
+                    <label for="spreadsheetId">🔗 Link o ID del Documento Google Sheets *</label>
+                    <input 
+                        type="text" 
+                        id="spreadsheetId" 
+                        name="spreadsheet_id" 
+                        placeholder="https://docs.google.com/spreadsheets/d/1ABC... o 1ABC123xyz..."
+                        required
+                    >
+                    <small>Puedes pegar la URL completa o solo el ID</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="tabName">📄 Nombre de la Hoja *</label>
+                    <input 
+                        type="text" 
+                        id="tabName" 
+                        name="tab_name" 
+                        placeholder="ej: Enero Jennifer, Facturación, etc."
+                        required
+                    >
+                    <small>El nombre de la pestaña en el documento (visible en las pestañas del Sheets)</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="startingRow">🔢 Fila donde empieza el desglose *</label>
+                    <input 
+                        type="number" 
+                        id="startingRow" 
+                        name="starting_row" 
+                        min="1" 
+                        placeholder="ej: 17"
+                        required
+                    >
+                    <small>Número de fila donde comienzan los datos (ej: si la fila 17 es la primera de tareas, escribe 17)</small>
+                </div>
+
+                <div class="info-box">
+                    <strong>Mapeo automático de columnas:</strong>
+                    <br>• <strong>Columna B</strong>: Cantidad (de ClickUp)
+                    <br>• <strong>Columna C</strong>: Título de la tarea
+                    <br>• <strong>Columna F</strong>: Precio unitario
+                    <br>
+                    <br>Si la fila inicial es 17, los datos se escribirán en B17, C17, F17, y así sucesivamente para cada tarea.
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn-primary">💾 Guardar Configuración</button>
+                    <button type="button" class="btn-secondary" onclick="clearForm()">✕ Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const listConfigs = {{ list_configs|tojson }};
+
+        function selectList(listId, listName) {
+            document.getElementById('listIdInput').value = listId;
+            document.getElementById('listNameDisplay').value = listName;
+            
+            const config = listConfigs[listId] || {};
+            document.getElementById('spreadsheetId').value = config.spreadsheet_id || '';
+            document.getElementById('tabName').value = config.tab_name || '';
+            document.getElementById('startingRow').value = config.starting_row || '';
+            
+            document.getElementById('formSection').classList.add('active');
+            document.getElementById('formSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function clearForm() {
+            document.getElementById('formSection').classList.remove('active');
+            document.getElementById('listIdInput').value = '';
+            document.getElementById('listNameDisplay').value = '';
+            document.getElementById('spreadsheetId').value = '';
+            document.getElementById('tabName').value = '';
+            document.getElementById('startingRow').value = '';
+        }
+    </script>
+</body>
+</html>

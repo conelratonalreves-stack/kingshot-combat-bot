@@ -1,0 +1,18 @@
+[Unit]
+Description=Kingshot Billing Panel (ClickUp -> Google Sheets)
+After=network.target
+
+[Service]
+Type=simple
+User=knycat
+WorkingDirectory=/home/knycat/kingshot-bot
+Environment="PYTHONUNBUFFERED=1"
+EnvironmentFile=/home/knycat/kingshot-bot/.env
+ExecStart=/home/knycat/kingshot-bot/venv/bin/python run_billing_panel.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

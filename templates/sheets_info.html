@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Google Sheets - Panel de Facturación</title>
+  <style>
+    :root {
+      --bg: #0c111b;
+      --panel: #111a2c;
+      --line: rgba(255,255,255,0.08);
+      --text: #eef2ff;
+      --muted: #9ca8c4;
+      --accent: #7cdb4f;
+      --accent-2: #4ea1ff;
+      --success: #5ce38b;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, Segoe UI, Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #0b1020 0%, #070b13 100%);
+      min-height: 100vh;
+    }
+
+    .shell {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    .header a {
+      color: var(--accent-2);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .panel {
+      background: rgba(17, 26, 44, 0.82);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      backdrop-filter: blur(10px);
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+
+    .panel-header {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .panel-body {
+      padding: 20px;
+    }
+
+    .sheet-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent-2), #5b9cff);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 20px rgba(78,161,255,0.25);
+    }
+
+    .sheet-link:hover {
+      opacity: 0.95;
+    }
+
+    .column-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+    }
+
+    .column-table th {
+      background: rgba(78,161,255,0.1);
+      border: 1px solid var(--line);
+      padding: 12px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--accent-2);
+    }
+
+    .column-table td {
+      border: 1px solid var(--line);
+      padding: 12px;
+      color: var(--text);
+    }
+
+    .column-table tr:nth-child(even) {
+      background: rgba(255,255,255,0.02);
+    }
+
+    .column-number {
+      background: rgba(124,219,79,0.1);
+      color: var(--accent);
+      font-weight: 700;
+      border-radius: 6px;
+      padding: 4px 8px;
+      text-align: center;
+      min-width: 40px;
+      display: inline-block;
+    }
+
+    .instruction {
+      background: rgba(92, 227, 139, 0.12);
+      border: 1px solid rgba(92, 227, 139, 0.35);
+      border-radius: 14px;
+      padding: 14px;
+      margin-top: 16px;
+      color: var(--success);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .instruction strong {
+      color: var(--text);
+    }
+
+    .code {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-family: monospace;
+      font-size: 12px;
+      color: var(--accent-2);
+      margin-top: 8px;
+      word-break: break-all;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn.primary {
+      color: #06110b;
+      background: linear-gradient(135deg, var(--accent), #bdfb7b);
+      box-shadow: 0 16px 30px rgba(124, 219, 79, 0.18);
+    }
+
+    .btn.secondary {
+      color: var(--text);
+      background: rgba(255,255,255,0.08);
+      box-shadow: none;
+      border: 1px solid var(--line);
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="header">
+      <h1>Google Sheets</h1>
+      <a href="/">← Volver al panel</a>
+    </div>
+
+    {% if sheet_url %}
+      <section class="panel">
+        <div class="panel-header">Hoja de Facturación</div>
+        <div class="panel-body">
+          <a href="{{ sheet_url }}" target="_blank" class="sheet-link">
+            📊 Abrir Google Sheets (compartido)
+          </a>
+          <p style="color: var(--muted); font-size: 13px; margin-bottom: 16px;">
+            Esta es la URL compartida. Puedes enviarla a tus clientes para que vean las facturas registradas.
+          </p>
+          <div class="code">{{ sheet_url }}</div>
+
+          <div class="instruction">
+            <strong>Para compartir con clientes:</strong><br>
+            1. Abre la hoja de Google Sheets<br>
+            2. Click en "Compartir" (esquina superior derecha)<br>
+            3. Cambia la opción a "Cualquiera con el enlace" o agrega correos específicos<br>
+            4. Copia el enlace y envía a los clientes
+          </div>
+        </div>
+      </section>
+    {% else %}
+      <section class="panel">
+        <div class="panel-body" style="text-align: center; padding: 40px 20px;">
+          <p style="color: var(--muted);">No se encontró GOOGLE_SHEETS_SPREADSHEET_ID en la configuración.</p>
+          <p style="color: var(--muted); font-size: 13px;">Agrega la ID en Ajustes → Variables de entorno</p>
+        </div>
+      </section>
+    {% endif %}
+
+    <section class="panel">
+      <div class="panel-header">Estructura de Columnas</div>
+      <div class="panel-body">
+        <p style="color: var(--muted); margin-bottom: 16px;">El panel sincroniza automáticamente datos en estos formatos de columna:</p>
+        <table class="column-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Columna</th>
+              <th>Descripción</th>
+              <th>Fuente</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% set col_descriptions = {
+              'cantidad': ('Cantidad de horas/items', 'Campo personalizado ClickUp'),
+              'descripcion': ('Descripción de la tarea', 'Nombre de la tarea'),
+              'precio_unitario': ('Precio por unidad', 'Campo personalizado ClickUp'),
+              'total': ('Total (cantidad × precio)', 'Cálculo automático'),
+              'clickup_task_id': ('ID única de tarea', 'ClickUp'),
+              'cliente': ('Nombre del cliente', 'Nombre del espacio ClickUp'),
+              'mes': ('Mes de facturación', 'Nombre de la carpeta'),
+              'lista': ('Nombre de la lista', 'Nombre de la lista ClickUp')
+            } %}
+            {% for col in columns %}
+              {% set desc = col_descriptions.get(col.strip(), ('Campo personalizado', 'ClickUp')) %}
+              <tr>
+                <td><span class="column-number">{{ loop.index }}</span></td>
+                <td><strong>{{ col.strip() }}</strong></td>
+                <td>{{ desc[0] }}</td>
+                <td style="font-size: 12px; color: var(--muted);">{{ desc[1] }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">¿Cómo funciona el flujo?</div>
+      <div class="panel-body">
+        <ol style="line-height: 2; color: var(--muted);">
+          <li><strong style="color: var(--text);">Organizas tus tareas en ClickUp</strong> con los campos requeridos (cantidad, precio unitario, etc.)</li>
+          <li><strong style="color: var(--text);">Abres el panel</strong> (este) y seleccionas clientes y meses</li>
+          <li><strong style="color: var(--text);">Haces click en "Sincronizar"</strong> - el panel extrae las tareas de ClickUp automáticamente</li>
+          <li><strong style="color: var(--text);">Las filas aparecen en Google Sheets</strong> en las columnas correctas</li>
+          <li><strong style="color: var(--text);">Compartes la URL con el cliente</strong> para que vea sus facturas</li>
+        </ol>
+
+        <div class="instruction" style="margin-top: 20px;">
+          <strong>Nota importante:</strong> El panel <strong>NO</strong> modifica datos manualmente. Solo sincroniza datos que ya existen en ClickUp con los campos correctos.
+          Si falta información (cantidad o precio), la tarea no se sincroniza y aparece como "error" en el panel.
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">Mapeo de Campos Personalizados</div>
+      <div class="panel-body">
+        <p style="color: var(--muted); margin-bottom: 12px;">El panel busca estos nombres de campos en ClickUp (configurable):</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div>
+            <strong style="color: var(--accent);">Para CANTIDAD:</strong>
+            <div class="code" style="margin-top: 8px;">cantidad, quantity, qty</div>
+          </div>
+          <div>
+            <strong style="color: var(--accent);">Para PRECIO UNITARIO:</strong>
+            <div class="code" style="margin-top: 8px;">precio por unidad, precio_unitario, unit price, price, precio</div>
+          </div>
+        </div>
+        <p style="color: var(--muted); font-size: 12px; margin-top: 16px;">
+          💡 Si tus campos tienen otros nombres, se pueden personalizar en la configuración del servidor.
+        </p>
+      </div>
+    </section>
+
+    <div class="actions" style="margin-top: 20px;">
+      <a href="/" class="btn secondary">← Volver al panel</a>
+      {% if sheet_url %}
+        <a href="{{ sheet_url }}" target="_blank" class="btn primary">📊 Abrir Sheets</a>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>

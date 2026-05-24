@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ajustes - Panel de Facturación</title>
+  <style>
+    :root {
+      --bg: #0c111b;
+      --panel: #111a2c;
+      --line: rgba(255,255,255,0.08);
+      --text: #eef2ff;
+      --muted: #9ca8c4;
+      --accent: #7cdb4f;
+      --accent-2: #4ea1ff;
+      --danger: #ff6b6b;
+      --warning: #ffcc66;
+      --success: #5ce38b;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, Segoe UI, Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #0b1020 0%, #070b13 100%);
+      min-height: 100vh;
+    }
+
+    .shell {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    .header a {
+      color: var(--accent-2);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .panel {
+      background: rgba(17, 26, 44, 0.82);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      backdrop-filter: blur(10px);
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+
+    .panel-header {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .panel-body {
+      padding: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .form-hint {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-family: monospace;
+      font-size: 14px;
+    }
+
+    .form-textarea {
+      font-family: monospace;
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: var(--muted);
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent-2);
+      background: rgba(78,161,255,0.08);
+    }
+
+    .button {
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #06110b;
+      background: linear-gradient(135deg, var(--accent), #bdfb7b);
+      box-shadow: 0 16px 30px rgba(124, 219, 79, 0.18);
+    }
+
+    .button.secondary {
+      color: var(--text);
+      background: rgba(255,255,255,0.08);
+      box-shadow: none;
+      border: 1px solid var(--line);
+    }
+
+    .button:hover {
+      opacity: 0.9;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .alert {
+      padding: 14px 16px;
+      border-radius: 16px;
+      margin-bottom: 16px;
+      border: 1px solid var(--line);
+    }
+
+    .alert.success {
+      background: rgba(92, 227, 139, 0.12);
+      border-color: rgba(92, 227, 139, 0.35);
+      color: var(--success);
+    }
+
+    .alert.error {
+      background: rgba(255, 107, 107, 0.12);
+      border-color: rgba(255, 107, 107, 0.35);
+      color: var(--danger);
+    }
+
+    .info-box {
+      background: rgba(78,161,255,0.08);
+      border: 1px solid rgba(78,161,255,0.35);
+      border-radius: 14px;
+      padding: 14px;
+      margin-top: 16px;
+      color: var(--accent-2);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .current-token {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-top: 6px;
+      font-family: monospace;
+      font-size: 13px;
+      word-break: break-all;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="header">
+      <h1>Ajustes</h1>
+      <a href="/">← Volver al panel</a>
+    </div>
+
+    {% for message in get_flashed_messages(with_categories=true) %}
+      <div class="alert {{ message[0] }}">{{ message[1] }}</div>
+    {% endfor %}
+
+    <form method="post">
+      <!-- ClickUp Configuration -->
+      <section class="panel">
+        <div class="panel-header">Configuración de ClickUp</div>
+        <div class="panel-body">
+          <div class="form-group">
+            <label class="form-label">Token de API de ClickUp</label>
+            <span class="form-hint">Obtén tu token desde la configuración de tu cuenta en ClickUp.</span>
+            <input type="password" class="form-input" name="clickup_token" placeholder="pk_xxxxxxxxxxxx">
+          </div>
+
+          {% if clickup_token %}
+            <div class="form-group">
+              <label class="form-label">Token actual (enmascarado)</label>
+              <div class="current-token">{{ clickup_token_masked }}</div>
+              <span class="form-hint">Si cambias el token, se reemplazará el actual.</span>
+            </div>
+          {% endif %}
+
+          <div class="info-box">
+            <strong>¿Cómo obtener tu token?</strong><br>
+            1. Inicia sesión en ClickUp<br>
+            2. Ve a Ajustes → Apps → API token<br>
+            3. Copia tu token personal y pégalo arriba
+          </div>
+        </div>
+      </section>
+
+      <!-- Field Mapping Configuration -->
+      <section class="panel">
+        <div class="panel-header">Mapeo de Campos Personalizados</div>
+        <div class="panel-body">
+          <p style="color: var(--muted); margin-bottom: 16px;">Personaliza los nombres de campos que el panel busca en ClickUp:</p>
+          
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label">Campos para CANTIDAD (separados por coma)</label>
+              <span class="form-hint">Nombres alternativos de campos de cantidad</span>
+              <textarea class="form-textarea" name="quantity_field_names" placeholder="cantidad, quantity, qty">{{ quantity_field_names }}</textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Campos para PRECIO UNITARIO (separados por coma)</label>
+              <span class="form-hint">Nombres alternativos de campos de precio</span>
+              <textarea class="form-textarea" name="price_field_names" placeholder="precio por unidad, precio_unitario, unit price, price, precio">{{ price_field_names }}</textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Columnas de Google Sheets (separadas por coma)</label>
+            <span class="form-hint">Orden de columnas donde se escriben los datos</span>
+            <textarea class="form-textarea" name="google_sheet_columns" placeholder="cantidad,descripcion,precio_unitario,total,clickup_task_id,cliente,mes,lista">{{ google_sheet_columns }}</textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Estado requerido en ClickUp</label>
+            <span class="form-hint">Solo se sincronizan tareas con este estado</span>
+            <input type="text" class="form-input" name="required_status_name" placeholder="terminada/facturada" value="{{ required_status_name }}">
+          </div>
+        </div>
+      </section>
+
+      <div class="actions">
+        <button class="button" type="submit">💾 Guardar todos los ajustes</button>
+        <button class="button secondary" type="button" onclick="location.href='/'">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

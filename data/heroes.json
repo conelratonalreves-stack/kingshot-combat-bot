@@ -1,0 +1,126 @@
+{
+  "heroes": {
+    "infantry": [
+      {
+        "name": "Gordon",
+        "attack": 850,
+        "lethality": 20,
+        "defense": 950,
+        "health": 2500,
+        "type": "infantry"
+      },
+      {
+        "name": "Howard",
+        "attack": 800,
+        "lethality": 18,
+        "defense": 920,
+        "health": 2400,
+        "type": "infantry"
+      }
+    ],
+    "cavalry": [
+      {
+        "name": "Chenko",
+        "attack": 950,
+        "lethality": 35,
+        "defense": 750,
+        "health": 2000,
+        "type": "cavalry"
+      },
+      {
+        "name": "Amadeus",
+        "attack": 920,
+        "lethality": 33,
+        "defense": 740,
+        "health": 1950,
+        "type": "cavalry"
+      }
+    ],
+    "archers": [
+      {
+        "name": "Yeonwoo",
+        "attack": 1100,
+        "lethality": 45,
+        "defense": 600,
+        "health": 1500,
+        "type": "archers"
+      },
+      {
+        "name": "Amane",
+        "attack": 1050,
+        "lethality": 42,
+        "defense": 590,
+        "health": 1480,
+        "type": "archers"
+      }
+    ]
+  },
+  "joiner_heroes": [
+    {
+      "name": "Chenko",
+      "effect_op": 101,
+      "damage_up": 0.25,
+      "type": "damage"
+    },
+    {
+      "name": "Amadeus",
+      "effect_op": 101,
+      "damage_up": 0.25,
+      "type": "damage"
+    },
+    {
+      "name": "Yeonwoo",
+      "effect_op": 101,
+      "damage_up": 0.25,
+      "type": "damage"
+    },
+    {
+      "name": "Amane",
+      "effect_op": 102,
+      "damage_up": 0.25,
+      "type": "damage"
+    },
+    {
+      "name": "Margot",
+      "effect_op": 102,
+      "damage_up": 0.25,
+      "type": "damage"
+    },
+    {
+      "name": "Howard",
+      "effect_op": 111,
+      "defense_up": 0.25,
+      "type": "defense"
+    },
+    {
+      "name": "Quinn",
+      "effect_op": 111,
+      "defense_up": 0.25,
+      "type": "defense"
+    },
+    {
+      "name": "Saul",
+      "effect_op_list": [112, 113],
+      "defense_up": 0.25,
+      "type": "defense"
+    },
+    {
+      "name": "Gordon",
+      "effect_op": 113,
+      "defense_up": 0.25,
+      "type": "defense"
+    },
+    {
+      "name": "Fahd",
+      "effect_op": 201,
+      "opp_damage_down": 0.25,
+      "type": "enemy_damage_reduction"
+    },
+    {
+      "name": "Eric",
+      "effect_op": 202,
+      "opp_damage_down": 0.25,
+      "type": "enemy_damage_reduction"
+    }
+  ]
+}

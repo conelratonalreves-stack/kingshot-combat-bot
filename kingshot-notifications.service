@@ -1,0 +1,17 @@
+[Unit]
+Description=Kingshot Notifications Discord Bot
+After=network.target
+
+[Service]
+Type=simple
+User=knycat
+WorkingDirectory=/home/knycat/kingshot-bot
+Environment="PYTHONUNBUFFERED=1"
+ExecStart=/home/knycat/kingshot-bot/venv/bin/python notifications_bot.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

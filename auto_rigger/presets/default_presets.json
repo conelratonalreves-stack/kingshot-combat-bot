@@ -1,0 +1,90 @@
+{
+  "version": "1.0.0",
+  "presets": {
+    "male_adult": {
+      "body_type": "MALE",
+      "rig_type": "STANDARD",
+      "spine_bones": 3,
+      "create_ik": true,
+      "create_pole_targets": true,
+      "weight_method": "HEAT",
+      "smooth_weights": true,
+      "smooth_iterations": 3
+    },
+    "female_adult": {
+      "body_type": "FEMALE",
+      "rig_type": "STANDARD",
+      "spine_bones": 3,
+      "create_ik": true,
+      "create_pole_targets": true,
+      "weight_method": "HEAT",
+      "smooth_weights": true,
+      "smooth_iterations": 3
+    },
+    "child": {
+      "body_type": "CHILD",
+      "rig_type": "STANDARD",
+      "spine_bones": 2,
+      "create_ik": true,
+      "create_pole_targets": true,
+      "weight_method": "HEAT",
+      "smooth_weights": true,
+      "smooth_iterations": 4
+    },
+    "stylized_simple": {
+      "body_type": "STYLIZED",
+      "rig_type": "BASIC",
+      "spine_bones": 2,
+      "create_ik": false,
+      "weight_method": "AUTOMATIC",
+      "smooth_weights": true,
+      "smooth_iterations": 2
+    },
+    "game_character_unreal": {
+      "body_type": "MALE",
+      "rig_type": "STANDARD",
+      "bone_naming": "UNREAL",
+      "spine_bones": 3,
+      "create_ik": true,
+      "create_pole_targets": true,
+      "weight_method": "HEAT",
+      "smooth_weights": true,
+      "smooth_iterations": 3,
+      "add_twist_bones": true
+    },
+    "game_character_unity": {
+      "body_type": "MALE",
+      "rig_type": "STANDARD",
+      "bone_naming": "UNITY",
+      "spine_bones": 3,
+      "create_ik": true,
+      "create_pole_targets": true,
+      "weight_method": "HEAT",
+      "smooth_weights": true,
+      "smooth_iterations": 3
+    },
+    "animation_advanced": {
+      "body_type": "MALE",
+      "rig_type": "ADVANCED",
+      "spine_bones": 4,
+      "create_ik": true,
+      "create_pole_targets": true,
+      "add_finger_bones": true,
+      "add_twist_bones": true,
+      "weight_method": "HEAT",
+      "smooth_weights": true,
+      "smooth_iterations": 5,
+      "auto_generate_poses": true
+    },
+    "quick_prototype": {
+      "body_type": "CUSTOM",
+      "rig_type": "BASIC",
+      "spine_bones": 2,
+      "create_ik": false,
+      "weight_method": "DISTANCE",
+      "smooth_weights": false,
+      "validate_weights": false,
+      "preserve_original": false
+    }
+  }
+}

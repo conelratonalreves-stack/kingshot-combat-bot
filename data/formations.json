@@ -1,0 +1,33 @@
+{
+  "formations": {
+    "balanced": {
+      "infantry": 0.50,
+      "cavalry": 0.20,
+      "archers": 0.30,
+      "description": "General purpose, good balance"
+    },
+    "defensive": {
+      "infantry": 0.60,
+      "cavalry": 0.20,
+      "archers": 0.20,
+      "description": "Maximum survivability"
+    },
+    "offensive": {
+      "infantry": 0.40,
+      "cavalry": 0.20,
+      "archers": 0.40,
+      "description": "Maximum damage output"
+    },
+    "archer_focus": {
+      "infantry": 0.10,
+      "cavalry": 0.10,
+      "archers": 0.80,
+      "description": "Specialized for bear hunt"
+    }
+  },
+  "minimum_composition": {
+    "infantry": 0.05,
+    "cavalry": 0.05,
+    "archers": 0.05
+  }
+}

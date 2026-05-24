@@ -1,0 +1,26 @@
+.env
+.env.*
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+.vscode/
+.idea/
+*.log
+
+# Secrets and local credentials
+*.pem
+*.key
+*credentials*.json
+beaming-figure-*.json
+rpi_config.json
+wpa_supplicant.conf
+
+# Local backups
+restore_point*.zip

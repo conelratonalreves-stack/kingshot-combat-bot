@@ -1,0 +1,29 @@
+{
+  "total_commands": 13,
+  "users": {
+    "100002913253859328": {
+      "name": "knycat",
+      "first_seen": "2025-12-11T18:53:42.288573",
+      "last_seen": "2026-01-17T02:26:56.785624",
+      "command_count": 13
+    }
+  },
+  "guilds": {
+    "1437872911552745704": {
+      "name": "House of Fire",
+      "first_seen": "2025-12-11T18:53:42.288573",
+      "last_seen": "2025-12-11T19:14:32.388408",
+      "command_count": 9
+    },
+    "1417120520629125122": {
+      "name": "Syndicate 757",
+      "first_seen": "2026-01-17T02:12:36.812906",
+      "last_seen": "2026-01-17T02:26:56.785624",
+      "command_count": 4
+    }
+  },
+  "commands": {
+    "calculate": 13
+  },
+  "started_at": "2025-12-11T18:50:59.859094"
+}

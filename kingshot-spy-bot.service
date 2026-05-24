@@ -1,0 +1,14 @@
+[Unit]
+Description=Kingshot Spy Bot
+After=network.target
+
+[Service]
+Type=simple
+User=knycat
+WorkingDirectory=/home/knycat/kingshot-spy-bot
+ExecStart=/home/knycat/kingshot-spy-bot/venv/bin/python spy_bot_main.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

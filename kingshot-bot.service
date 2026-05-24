@@ -1,0 +1,23 @@
+[Unit]
+Description=Kingshot Discord Bot
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=knycat
+Group=knycat
+WorkingDirectory=/home/knycat/kingshot-bot
+# Load environment variables (DISCORD_TOKEN etc.) from .env if present
+EnvironmentFile=/home/knycat/kingshot-bot/.env
+# Use full absolute paths to avoid depending on WorkingDirectory
+ExecStart=/home/knycat/kingshot-bot/venv/bin/python /home/knycat/kingshot-bot/main.py
+Restart=always
+RestartSec=10
+KillMode=process
+TimeoutStartSec=30
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
